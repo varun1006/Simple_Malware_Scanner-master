@@ -1,0 +1,75 @@
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.sql.*;
+
+public class Database extends Explorer implements ActionListener {
+
+	public void search(String ab, Connection cone,String fpath)
+	{
+		
+        
+		/*ConnectionDB connection = new ConnectionDB();
+		Connection con=null;*/
+		PreparedStatement p = null;
+		ResultSet rs = null;
+
+		//con = connection.ConnectDB();
+		
+		try {
+
+			String sql= "select Filename from hash_table where Hashcode='"+ab+"'";
+
+			
+			p = cone.prepareStatement(sql);
+			rs = p.executeQuery();
+
+			if (rs.next()) {
+				
+					
+				
+			
+			
+			String fn=rs.getString("Filename");
+			
+			
+			Explorer.A.append("File name : "+fn+" appears to be malicious\n");
+			
+			Explorer.A.append("Do you want to delete this file?\n");
+			File F1 = new File(fpath);
+			Explorer.button2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e ) {
+					delete(F1);
+				}
+			});
+			
+			
+			}
+			
+		}
+
+		
+		catch (SQLException e) {
+
+			
+			System.out.println(e);
+		}
+	}
+	
+	
+	public void delete(File F1)
+	{
+
+		if(F1.delete())
+			Explorer.A.append("File deleted successfully\n");
+		else
+		    Explorer.A.append("Failed to delete file\n");
+	}
+		
+	
+	
+	
+	
+	
+}

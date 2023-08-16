@@ -1,0 +1,35 @@
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class ConnectionDB {
+
+	final String DB_URL = "jdbc:mysql://127.0.0.1:3306/siganturesdb";
+		final String USER = "root";
+
+	final String PASS = "Ravi@123";
+
+
+public Connection ConnectDB()
+	{
+		Connection con = null;
+		try {
+
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			con = DriverManager.getConnection(DB_URL,USER,PASS);
+			System.out.println("connected succesfully");
+		}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return con;
+	}
+}

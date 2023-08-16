@@ -1,0 +1,79 @@
+import javax.swing.*;
+import java.awt.event.*;
+import javax.swing.filechooser.*;
+public class Explorer extends JFrame implements ActionListener 
+{
+	String dirpath = null;
+	String PATH = null;
+	Explorer()
+	{
+	
+	}
+	static JLabel l;
+	
+	
+	static JTextArea A;
+	static JButton button2 = new JButton("Delete");
+	static JFrame f = new JFrame("File Explorer");
+	
+	public static void main(String args[])
+	{
+		
+		
+		
+		f.setSize(700,500);
+		f.setVisible(true);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JButton button1 = new JButton("Browse..");
+		
+		Explorer f1 = new Explorer();
+		button1.addActionListener(f1);
+		
+		JPanel p = new JPanel();
+		Explorer.A = new JTextArea(25,25);
+		String h = "Scan Results: \n";
+		Explorer.A.setText(h);
+		p.add(A);
+		p.add(button1);
+		p.add(button2);
+		l = new JLabel("no file selected");
+		p.add(l);
+		f.add(p);
+		f.setVisible(true);
+	}
+		
+		public void actionPerformed(ActionEvent evt)
+		{   
+			//JFrame f1 = new JFrame("Results");
+			String PATH = null;
+			String com = evt.getActionCommand();
+			if(com.equals("Browse.."))
+			{
+			JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+			j.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+			int r = j.showOpenDialog(null);
+			if(r== JFileChooser.APPROVE_OPTION) {
+				l.setText(j.getSelectedFile().getAbsolutePath());
+				dirpath = (j.getSelectedFile().getAbsolutePath());
+			
+				PATH = dirpath.replace("\\","\\\\");
+				
+				
+				
+			}
+			
+			else
+				l.setText("Operation cancelled");
+			}
+			ReadFile rf = new ReadFile();
+			
+			
+			
+			rf.read(PATH);
+			
+			
+		}
+	
+	}
+
+
